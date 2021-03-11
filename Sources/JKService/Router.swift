@@ -1,11 +1,37 @@
 //
-//  File.swift
+//  Router.swift
 //  
 //
 //  Created by Jitender Kumar on 11/3/21.
 //
 
 import Foundation
+
+struct Constants {
+    let scheme = "https"
+    let host = "shopicruit.myshopify.com"
+}
+
+struct EndPoint {
+    let getSources = "/admin/custom_collections.json"
+    let getProductIds = "/admin/collects.json"
+    let getProductInfo = "/admin/products.json"
+}
+
+struct RequestMethod {
+    let get = "GET"
+    let post = "POST"
+    
+//    let create = "CREATE"
+//    let delete = "DELETE"
+
+//    let put = "PUT"
+//    let connect = "CONNECT"
+//    let option = "OPTIONS"
+//    let track = "TRACE"
+//    let patch = "PATCH"
+//    let head = "HEAD"
+}
 
 public enum Router {
     case getSources
@@ -15,45 +41,29 @@ public enum Router {
     var scheme: String {
         switch self {
         case .getSources, .getProductIds, .getProductInfo:
-            return "https"
+            return Constants().scheme
         }
     }
     var host: String {
         switch self {
         case .getSources, .getProductIds, .getProductInfo:
-            return "shopicruit.myshopify.com"
+            return Constants().host
         }
     }
     var path: String {
         switch self {
         case .getSources:
-            return "/admin/custom_collections.json"
+            return EndPoint().getSources
         case .getProductIds:
-            return "/admin/collects.json"
+            return EndPoint().getProductIds
         case .getProductInfo:
-            return "/admin/products.json"
-        }
-    }
-    var parameters: [URLQueryItem] {
-        let accessToken = "c32313df0d0ef512ca64d5b336a0d7c6"
-        switch self {
-        case .getSources:
-            return [URLQueryItem(name: "page", value: "1"),
-                    URLQueryItem(name: "access_token", value: accessToken)]
-        case .getProductIds:
-            return [URLQueryItem(name: "page", value: "1"),
-                    URLQueryItem(name: "collection_id", value: "68424466488"),
-                    URLQueryItem(name: "access_token", value: accessToken)]
-        case .getProductInfo:
-            return [URLQueryItem(name: "ids", value: "2759162243,2759143811"),
-                    URLQueryItem(name: "page", value: "1"),
-                    URLQueryItem(name: "access_token", value: accessToken)]
+            return EndPoint().getProductInfo
         }
     }
     var method: String {
         switch self {
         case .getSources, .getProductIds, .getProductInfo:
-            return "GET"
+            return RequestMethod().get
         }
     }
 }
