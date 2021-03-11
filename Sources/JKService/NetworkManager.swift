@@ -1,19 +1,21 @@
 //
-//  File.swift
+//  NetworkManager.swift
 //  
 //
 //  Created by Jitender Kumar on 11/3/21.
 //
 
 import Foundation
-public class ServiceLayer {
-
-    public class func request<T: Codable>(router: Router, completion: @escaping (Result<[String: [T]], Error>) -> ()) {
+public class NetworkManager {
+   public init() { }
+    public func request<T: Codable>(router: Router,
+                                    parameters: [String: String],
+                                    completion: @escaping (Result<[String: [T]], Error>) -> ()) {
         var components = URLComponents()
         components.scheme = router.scheme
         components.host = router.host
         components.path = router.path
-        components.queryItems = router.parameters
+        components.queryItems = queryItems(dictionary: parameters)
         guard let url = components.url else { return }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = router.method
@@ -34,17 +36,9 @@ public class ServiceLayer {
         }
         dataTask.resume()
     }
-}
-
-class Test {
-    init() {
-        ServiceLayer.request(router: Router.getProductInfo) { (result: Result<[String : [ModelItem]], Error>) in
-            switch result {
-            case .success:
-                print(result)
-            case .failure:
-                print(result)
-            }
+    func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
+        return dictionary.map {
+            URLQueryItem(name: $0.0, value: $0.1)
         }
     }
 }
