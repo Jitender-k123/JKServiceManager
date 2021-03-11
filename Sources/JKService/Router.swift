@@ -22,15 +22,15 @@ struct RequestMethod {
     let get = "GET"
     let post = "POST"
     
-//    let create = "CREATE"
-//    let delete = "DELETE"
+    let create = "CREATE"
+    let delete = "DELETE"
 
-//    let put = "PUT"
-//    let connect = "CONNECT"
-//    let option = "OPTIONS"
-//    let track = "TRACE"
-//    let patch = "PATCH"
-//    let head = "HEAD"
+    let put = "PUT"
+    let connect = "CONNECT"
+    let option = "OPTIONS"
+    let track = "TRACE"
+    let patch = "PATCH"
+    let head = "HEAD"
 }
 
 public enum Router {
